@@ -39,14 +39,14 @@ struct Id_card: Codable {
 }
 
 struct Face_check: Codable {
-    let is_same_person: Bool
-    let is_live: Bool
+    let is_same_person: Int
+    let is_live: Int
     let selfie_image: Data?
 }
 
 struct Account: Codable {
     let verified: Bool
-    let user_name: String?
+    let account_holder: String?
     let finance_company: String?
     let finance_code: String?
     let account_number: String?
@@ -56,8 +56,13 @@ struct Account: Codable {
 func parsingJson(_ jsonString: String) -> KycResponse? {
     if let uriDecodedData = jsonString.data(using: .utf8) {
         let decoder = JSONDecoder()
-        let response = try? decoder.decode(KycResponse.self, from: uriDecodedData)
-        return response
+        do {
+            let response = try decoder.decode(KycResponse.self, from: uriDecodedData)
+            return response
+        } catch let error {
+            print("error: \(error)")
+            return nil
+        }
     }
     
     return nil

@@ -95,8 +95,8 @@ class ReportViewController: UIViewController {
         if detail.module.face_authentication {
             faceAuthentication.isHidden = false
             if let face_check = detail.face_check {
-                lblSimilarity.text = face_check.is_same_person ? "높음" : "낮음"
-                lblSimilarity.textColor = face_check.is_same_person ? alcheraColor : .red
+                lblSimilarity.text = (face_check.is_same_person != 0) ? "높음" : "낮음"
+                lblSimilarity.textColor = (face_check.is_same_person != 0) ? alcheraColor : .red
                 imgIdCrop.image = UIImage(data: detail.id_card?.id_crop_image ?? Data())
                 imgSelfie.image = UIImage(data: face_check.selfie_image ?? Data())
             } else {
@@ -108,8 +108,8 @@ class ReportViewController: UIViewController {
         if detail.module.liveness {
             liveness.isHidden = false
             if let face_check = detail.face_check {
-                lblLive.text = face_check.is_live ? "성공" : "실패"
-                lblLive.textColor = face_check.is_live ? alcheraColor : .red
+                lblLive.text = (face_check.is_live != 0) ? "성공" : "실패"
+                lblLive.textColor = (face_check.is_live != 0) ? alcheraColor : .red
             } else {
                 lblLive.text = NOTAVAILABLE
             }
@@ -121,7 +121,7 @@ class ReportViewController: UIViewController {
             if let account = detail.account {
                 lblAccountVerification.text = account.verified ? "성공" : "실패"
                 lblAccountVerification.textColor = account.verified ? alcheraColor : .red
-                lblAccountUser.text = account.user_name ?? NOTAVAILABLE
+                lblAccountUser.text = account.account_holder ?? NOTAVAILABLE
                 lblAccountFinance.text = account.finance_company ?? NOTAVAILABLE
                 lblFinanceCode.text = account.finance_code ?? NOTAVAILABLE
                 lblAccountNumber.text = account.account_number ?? NOTAVAILABLE
